@@ -10,7 +10,9 @@ def getHash():
     while go:
         print("\nHash Function\n"
               "\t1. MD5\n"
-              "\t2. SHA-256\n"
+              "\t2. SHA-1\n"
+              "\t3. SHA-256\n"
+              "\t4. SHA-512\n"
               "\t0. Quit\n")
         awnser = input("Select Hash Function : ")
         if awnser == "1":
@@ -22,10 +24,24 @@ def getHash():
                   "Check Hash Value : " + hashResult)
         elif awnser == "2":
             os.chdir(fLo)
+            cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " SHA1")
+            hashResult = cmdResult[1].split("\n")[1]
+            print("File Location : " + fLo + "\\" + fName + "\n",
+                  "Checksum Type : SHA-1\n",
+                  "Check Hash Value : " + hashResult)
+        elif awnser == "3":
+            os.chdir(fLo)
             cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " SHA256")
             hashResult = cmdResult[1].split("\n")[1]
             print("File Location : " + fLo + "\\" + fName + "\n",
-                  "Checksum Type : MD5\n",
+                  "Checksum Type : SHA-256\n",
+                  "Check Hash Value : " + hashResult)
+        elif awnser == "4":
+            os.chdir(fLo)
+            cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " SHA512")
+            hashResult = cmdResult[1].split("\n")[1]
+            print("File Location : " + fLo + "\\" + fName + "\n",
+                  "Checksum Type : SHA-512\n",
                   "Check Hash Value : " + hashResult)
         elif awnser == "0" or awnser == "exit" or awnser == "quit":
             print("-> Bye!")
