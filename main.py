@@ -32,7 +32,6 @@ def getHash():
             go = False
         else:
             print("Please enter correct command.")
-            print("Please enter correct command.")
 
 
 getHash()
