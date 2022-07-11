@@ -4,6 +4,10 @@ from Crypto.Hash import SHA3_224
 from Crypto.Hash import SHA3_256
 from Crypto.Hash import SHA3_384
 from Crypto.Hash import SHA3_512
+from Crypto.Hash import MD5
+from Crypto.Hash import SHA512
+from Crypto.Hash import SHA1
+from Crypto.Hash import SHA256
 
 def verifer(hashresult):
     orHash = input("Input Hash Value for compare >>> ")
@@ -13,9 +17,17 @@ def verifer(hashresult):
         print("Verify : Incorrect")
 
 def getHash():
-    infLo = input("Input File Location >>> ")
-    fLo = os.path.abspath(infLo)
-    fName = input("Input File Name >>> ")
+    g = True
+    while g:
+        infLo = input("Input File Location >>> ")
+        fLo = os.path.abspath(infLo)
+        fName = input("Input File Name >>> ")
+        fAbsPath = fLo + "\\" + fName
+        if os.path.isfile(fAbsPath) == True:
+            break
+        else:
+            print("Can't Find FIle")
+
     go = True
     while go:
         print("\nHash Function\n"
@@ -30,84 +42,92 @@ def getHash():
               "\t0. Quit\n")
         awnser = input("Select Hash Function : ")
         if awnser == "1":
-            os.chdir(fLo)
-            cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " MD5")
-            hashResult = cmdResult[1].split("\n")[1]
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            f = open(fAbsPath, "rb")
+            data = f.read()
+            f.close()
+            hashResult = MD5.new()
+            hashResult.update(data)
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : MD5\n",
-                  "Check Hash Value : " + hashResult)
-            verifer(hashResult)
+                  "Check Hash Value : " + hashResult.hexdigest())
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "2":
-            os.chdir(fLo)
-            cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " SHA1")
-            hashResult = cmdResult[1].split("\n")[1]
-            print("File Location : " + fLo + "\\" + fName + "\n",
-                  "Checksum Type : SHA-1\n",
-                  "Check Hash Value : " + hashResult)
-            verifer(hashResult)
+            f = open(fAbsPath, "rb")
+            data = f.read()
+            f.close()
+            hashResult = SHA1.new()
+            hashResult.update(data)
+            print("File Location : " + fAbsPath + "\n",
+                  "Checksum Type : SHA1\n",
+                  "Check Hash Value : " + hashResult.hexdigest())
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "3":
-            os.chdir(fLo)
-            cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " SHA256")
-            hashResult = cmdResult[1].split("\n")[1]
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            f = open(fAbsPath, "rb")
+            data = f.read()
+            f.close()
+            hashResult = SHA256.new()
+            hashResult.update(data)
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : SHA-256\n",
-                  "Check Hash Value : " + hashResult)
-            verifer(hashResult)
+                  "Check Hash Value : " + hashResult.hexdigest())
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "4":
-            os.chdir(fLo)
-            cmdResult = sp.getstatusoutput("certutil -hashfile " + fName + " SHA512")
-            hashResult = cmdResult[1].split("\n")[1]
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            f = open(fAbsPath, "rb")
+            data = f.read()
+            f.close()
+            hashResult = SHA512.new()
+            hashResult.update(data)
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : SHA-512\n",
-                  "Check Hash Value : " + hashResult)
-            verifer(hashResult)
+                  "Check Hash Value : " + hashResult.hexdigest())
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "5":
-            f = open(fLo +"\\" +fName, "rb")
+            f = open(fAbsPath, "rb")
             data = f.read()
             f.close()
             hashResult = SHA3_224.new()
             hashResult.update(data)
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : SHA3-224\n",
                   "Check Hash Value : " + hashResult.hexdigest())
-            verifer(hashResult)
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "6":
-            f = open(fLo +"\\" +fName, "rb")
+            f = open(fAbsPath, "rb")
             data = f.read()
             f.close()
             hashResult = SHA3_256.new()
             hashResult.update(data)
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : SHA3-256\n",
                   "Check Hash Value : " + hashResult.hexdigest())
-            verifer(hashResult)
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "7":
-            f = open(fLo +"\\" +fName, "rb")
+            f = open(fAbsPath, "rb")
             data = f.read()
             f.close()
             hashResult = SHA3_384.new()
             hashResult.update(data)
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : SHA3-384\n",
                   "Check Hash Value : " + hashResult.hexdigest())
-            verifer(hashResult)
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "8":
-            f = open(fLo +"\\" +fName, "rb")
+            f = open(fAbsPath, "rb")
             data = f.read()
             f.close()
             hashResult = SHA3_512.new()
             hashResult.update(data)
-            print("File Location : " + fLo + "\\" + fName + "\n",
+            print("File Location : " + fAbsPath + "\n",
                   "Checksum Type : SHA3-512\n",
                   "Check Hash Value : " + hashResult.hexdigest())
-            verifer(hashResult)
+            verifer(hashResult.hexdigest())
             go = False
         elif awnser == "0" or awnser == "exit" or awnser == "quit":
             print("\n-> Bye!")
